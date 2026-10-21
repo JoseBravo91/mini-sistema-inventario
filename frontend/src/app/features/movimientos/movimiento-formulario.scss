@@ -1,14 +1,151 @@
 .tarjeta-formulario {
-  max-width: 500px;
+  max-width: 640px;
   margin: 0 auto;
+  background-color: var(--color-card);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 28px 24px;
+  color: #ffffff;
+  background-color: var(--color-primary);
+}
+
+.encabezado-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 12px;
+}
+
+.encabezado-entrada .encabezado-icono {
+  background-color: rgba(21, 128, 61, 0.35);
+  color: #4ade80;
+}
+
+.encabezado-salida .encabezado-icono {
+  background-color: rgba(185, 28, 28, 0.3);
+  color: #f87171;
+}
+
+.encabezado-icono mat-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.encabezado-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.encabezado-titulo {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.encabezado-subtitulo {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.cuerpo {
+  padding: 28px;
+}
+
+.fila-campos {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+}
+
+.campo {
+  width: 100%;
 }
 
 .campo-completo {
   width: 100%;
-  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.sufijo-unidad {
+  font-size: 0.78rem;
+  color: var(--color-muted-foreground);
+  margin-left: 4px;
+}
+
+.panel-stock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin: -4px 0 16px;
+  border-radius: 10px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-foreground);
+}
+
+.panel-stock mat-icon {
+  color: var(--color-muted-foreground);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.panel-stock .separador {
+  margin: 0 4px;
+  color: var(--color-muted-foreground);
+}
+
+.panel-stock .chip-estado {
+  margin-left: auto;
 }
 
 .boton-registrar {
   width: 100%;
-  height: 44px;
+  height: 48px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff !important;
+}
+
+.boton-entrada,
+.boton-salida {
+  background-color: var(--color-accent) !important;
+}
+
+.boton-entrada:hover,
+.boton-salida:hover {
+  background-color: var(--color-accent-hover) !important;
+}
+
+@media (max-width: 560px) {
+  .fila-campos {
+    grid-template-columns: 1fr;
+  }
+
+  .encabezado {
+    padding: 22px 20px 18px;
+  }
+
+  .cuerpo {
+    padding: 20px;
+  }
 }

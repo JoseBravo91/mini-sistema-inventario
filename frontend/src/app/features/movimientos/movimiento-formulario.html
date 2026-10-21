@@ -1,15 +1,24 @@
-<mat-card class="tarjeta-formulario">
-  <mat-card-header>
-    <mat-card-title>{{ titulo }}</mat-card-title>
-  </mat-card-header>
+<div class="tarjeta-formulario">
+  <div class="encabezado" [class.encabezado-entrada]="esEntrada" [class.encabezado-salida]="!esEntrada">
+    <div class="encabezado-icono">
+      <mat-icon>{{ esEntrada ? 'call_received' : 'call_made' }}</mat-icon>
+    </div>
+    <div class="encabezado-texto">
+      <span class="encabezado-titulo">{{ titulo }}</span>
+      <span class="encabezado-subtitulo">
+        {{ esEntrada ? 'Suma unidades al inventario de un producto' : 'Descuenta unidades del inventario de un producto' }}
+      </span>
+    </div>
+  </div>
 
-  <mat-card-content>
-    <form [formGroup]="formulario" (ngSubmit)="registrar()">
-      <mat-form-field appearance="outline" class="campo-completo">
+  <form class="cuerpo" [formGroup]="formulario" (ngSubmit)="registrar()">
+    <div class="fila-campos">
+      <mat-form-field appearance="outline" class="campo campo-producto">
         <mat-label>Producto</mat-label>
+        <mat-icon matPrefix>inventory_2</mat-icon>
         <mat-select formControlName="productoId">
           @for (producto of productos(); track producto.id) {
-            <mat-option [value]="producto.id">{{ producto.codigo }} - {{ producto.nombre }}</mat-option>
+            <mat-option [value]="producto.id">{{ producto.codigo }} &middot; {{ producto.nombre }}</mat-option>
           }
         </mat-select>
         @if (formulario.get('productoId')?.hasError('required') && formulario.get('productoId')?.touched) {
@@ -17,29 +26,55 @@
         }
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="campo-completo">
+      <mat-form-field appearance="outline" class="campo campo-cantidad">
         <mat-label>Cantidad</mat-label>
-        <input matInput type="number" formControlName="cantidad" />
+        <input matInput type="number" min="1" formControlName="cantidad" />
+        <span matSuffix class="sufijo-unidad">u.</span>
         @if (formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched) {
           <mat-error>La cantidad es obligatoria</mat-error>
         }
         @if (formulario.get('cantidad')?.hasError('min') && formulario.get('cantidad')?.touched) {
-          <mat-error>La cantidad debe ser mayor a cero</mat-error>
+          <mat-error>Debe ser mayor a cero</mat-error>
         }
       </mat-form-field>
+    </div>
 
-      <mat-form-field appearance="outline" class="campo-completo">
-        <mat-label>Observacion</mat-label>
-        <textarea matInput formControlName="observacion" rows="2"></textarea>
-      </mat-form-field>
+    @if (inventarioSeleccionado(); as info) {
+      <div class="panel-stock">
+        <mat-icon>info</mat-icon>
+        <span>
+          Stock actual: <strong>{{ info.stockActual }}</strong> unidades
+          <span class="separador">&middot;</span>
+          minimo {{ info.stockMinimo }}
+        </span>
+        <span class="chip-estado" [class.chip-normal]="info.estado === 'NORMAL'" [class.chip-bajo]="info.estado === 'BAJO'" [class.chip-agotado]="info.estado === 'AGOTADO'">
+          {{ info.estado }}
+        </span>
+      </div>
+    }
 
-      <button mat-raised-button color="primary" type="submit" class="boton-registrar" [disabled]="guardando()">
-        @if (guardando()) {
-          <mat-spinner diameter="20"></mat-spinner>
-        } @else {
-          <span>Registrar</span>
-        }
-      </button>
-    </form>
-  </mat-card-content>
-</mat-card>
+    <mat-form-field appearance="outline" class="campo campo-completo">
+      <mat-label>Observacion</mat-label>
+      <mat-icon matPrefix>edit_note</mat-icon>
+      <textarea matInput formControlName="observacion" rows="2" placeholder="Opcional: motivo, numero de factura, destino..."></textarea>
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      type="submit"
+      class="boton-registrar"
+      [class.boton-entrada]="esEntrada"
+      [class.boton-salida]="!esEntrada"
+      [disabled]="guardando()"
+    >
+      @if (guardando()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <ng-container>
+          <mat-icon>{{ esEntrada ? 'call_received' : 'call_made' }}</mat-icon>
+          <span>{{ esEntrada ? 'Registrar entrada' : 'Registrar salida' }}</span>
+        </ng-container>
+      }
+    </button>
+  </form>
+</div>
