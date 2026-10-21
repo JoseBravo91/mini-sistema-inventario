@@ -1,6 +1,17 @@
 # MiniSistema de Gestion de Inventario
 
-Prueba tecnica: backend en C# (.NET 8) + PostgreSQL, frontend en Angular (standalone components).
+Prueba tecnica: backend en C# (.NET 8) + PostgreSQL, frontend en Angular 22 (standalone components).
+
+Repositorio: https://github.com/JoseBravo91/mini-sistema-inventario
+
+## Cumplimiento de requisitos de la prueba
+
+| Requisito | Estado |
+|---|---|
+| Backend en C#, sin excepciones | .NET 8, 4 proyectos por capas (Domain/Application/Infrastructure/Api). Cero codigo de logica de negocio en otro lenguaje. |
+| Frontend en Angular 16 o superior (no AngularJS) | Angular **22**, standalone components (`@Component` sin NgModules), ver `frontend/package.json`. |
+| Script de base de datos incluido | `database/schema.sql`: crea la base, tablas, stored procedures, funcion y datos semilla. Ver seccion [1. Base de datos](#1-base-de-datos). Pensado para reinstalacion limpia en cualquier momento, incluso con el backend corriendo (cierra las conexiones activas antes de recrear la base). |
+| Codigo en GitHub con historial documentado | Cada entrega es un commit individual con [Conventional Commits](https://www.conventionalcommits.org/) (`feat`, `fix`, `docs`...) y una descripcion de que cambio y por que. Ver `git log` en el repositorio. |
 
 ## Estructura
 
@@ -49,12 +60,29 @@ Con PostgreSQL corriendo localmente:
 psql -U <tu_usuario> -d postgres -f database/schema.sql
 ```
 
-El script crea la base `inventario_db` (la elimina si ya existe), las tablas, el tipo
-`tipo_movimiento`, la funcion `fn_inventario_actual()`, los procedimientos
-`sp_registrar_entrada` y `sp_registrar_salida`, y carga datos semilla:
+El script es **autocontenido e idempotente**: se puede ejecutar las veces que haga falta.
+Primero cierra cualquier conexion activa a `inventario_db` (por ejemplo, si el backend ya
+esta corriendo) y luego recrea la base desde cero, por lo que siempre deja un estado limpio
+y predecible para probar.
 
-- Usuario admin: `admin` / `Admin123!`
-- 6 productos de ejemplo con movimientos iniciales
+Crea:
+
+- La base `inventario_db`, sus tablas (`usuarios`, `productos`, `movimientos`) y el tipo
+  enumerado `tipo_movimiento`.
+- La funcion `fn_inventario_actual()`: calcula el stock actual y el estado (Normal / Bajo /
+  Agotado) de cada producto a partir de sus movimientos.
+- El procedimiento `sp_registrar_entrada(producto_id, cantidad, usuario_id, observacion)`:
+  inserta un movimiento de tipo ENTRADA.
+- El procedimiento `sp_registrar_salida(producto_id, cantidad, usuario_id, observacion)`:
+  valida que haya stock suficiente **dentro del procedimiento** (`RAISE EXCEPTION` si no lo
+  hay) antes de insertar el movimiento de tipo SALIDA. El backend nunca calcula el stock en
+  C# para esta validacion, siempre llama al procedimiento.
+- Datos semilla: usuario `admin` / `Admin123!` y 6 productos de ejemplo con movimientos
+  iniciales (quedan en distintos estados: Normal, Bajo).
+
+El backend llama a estos tres objetos directamente via ADO.NET (`NpgsqlCommand`), ver
+`InventarioApi.Infrastructure/Repositories/MovimientoRepository.cs` e
+`InventarioRepository.cs`.
 
 ## 2. Backend
 

@@ -2,6 +2,11 @@
 -- Motor: PostgreSQL 15+
 -- Ejecutar con: psql -U postgres -f schema.sql
 
+-- Cierra conexiones activas (ej. el backend corriendo) para poder recrear la base sin errores
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'inventario_db' AND pid <> pg_backend_pid();
+
 -- Elimina la base si existe para permitir reinstalacion limpia
 DROP DATABASE IF EXISTS inventario_db;
 CREATE DATABASE inventario_db;
