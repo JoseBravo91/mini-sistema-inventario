@@ -1,0 +1,40 @@
+.contenedor {
+  height: 100vh;
+}
+
+.menu-lateral {
+  width: 240px;
+}
+
+.activo {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.espaciador {
+  flex: 1 1 auto;
+}
+
+.usuario-info {
+  margin-right: 12px;
+  font-size: 0.9rem;
+}
+
+.contenido {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .menu-lateral {
+    width: 72px;
+  }
+
+  .usuario-info {
+    display: none;
+  }
+
+  .contenido {
+    padding: 12px;
+  }
+}

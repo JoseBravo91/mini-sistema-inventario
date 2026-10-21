@@ -1,0 +1,14 @@
+# Compilados
+bin/
+obj/
+
+# Logs de Serilog
+logs/
+
+# Archivos de usuario de Visual Studio / Rider
+*.user
+.vs/
+
+# Configuracion local con secretos (se usa dotnet user-secrets, nunca se comitea)
+appsettings.Development.json
+appsettings.Local.json

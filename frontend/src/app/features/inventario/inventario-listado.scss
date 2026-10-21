@@ -1,0 +1,41 @@
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.tabla-responsiva {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.sin-datos {
+  text-align: center;
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.chip-normal {
+  background-color: #c8e6c9 !important;
+  color: #1b5e20 !important;
+}
+
+.chip-bajo {
+  background-color: #ffe0b2 !important;
+  color: #e65100 !important;
+}
+
+.chip-agotado {
+  background-color: #ffcdd2 !important;
+  color: #b71c1c !important;
+}
