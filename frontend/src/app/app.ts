@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   imports: [RouterOutlet],
@@ -8,5 +9,8 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('inventario-frontend');
+  constructor(iconRegistry: MatIconRegistry) {
+    // Usa Material Symbols Outlined (icono moderno de trazo fino) en vez de Material Icons clasico
+    iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+  }
 }

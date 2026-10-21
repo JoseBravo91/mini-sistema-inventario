@@ -1,31 +1,98 @@
 <mat-sidenav-container class="contenedor">
-  <mat-sidenav mode="side" opened class="menu-lateral">
+  <mat-sidenav mode="side" opened class="menu-lateral" [class.menu-lateral-colapsado]="colapsado()">
+    <div class="marca-sidebar">
+      <span class="marca-icono"><mat-icon>inventory_2</mat-icon></span>
+      @if (!colapsado()) {
+        <span class="marca-texto">Inventario<strong>Pro</strong></span>
+      }
+    </div>
+
     <mat-nav-list>
-      <a mat-list-item routerLink="/inventario" routerLinkActive="activo">
+      <a
+        mat-list-item
+        routerLink="/inventario"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Inventario' : ''"
+        matTooltipPosition="right"
+      >
         <mat-icon matListItemIcon>inventory_2</mat-icon>
-        <span matListItemTitle>Inventario</span>
+        @if (!colapsado()) {
+          <span matListItemTitle>Inventario</span>
+        }
       </a>
-      <a mat-list-item routerLink="/productos" routerLinkActive="activo">
+      <a
+        mat-list-item
+        routerLink="/productos"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Productos' : ''"
+        matTooltipPosition="right"
+      >
         <mat-icon matListItemIcon>category</mat-icon>
-        <span matListItemTitle>Productos</span>
+        @if (!colapsado()) {
+          <span matListItemTitle>Productos</span>
+        }
       </a>
-      <a mat-list-item routerLink="/movimientos/entrada" routerLinkActive="activo">
+      <a
+        mat-list-item
+        routerLink="/movimientos/entrada"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Registrar entrada' : ''"
+        matTooltipPosition="right"
+      >
         <mat-icon matListItemIcon>call_received</mat-icon>
-        <span matListItemTitle>Registrar entrada</span>
+        @if (!colapsado()) {
+          <span matListItemTitle>Registrar entrada</span>
+        }
       </a>
-      <a mat-list-item routerLink="/movimientos/salida" routerLinkActive="activo">
+      <a
+        mat-list-item
+        routerLink="/movimientos/salida"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Registrar salida' : ''"
+        matTooltipPosition="right"
+      >
         <mat-icon matListItemIcon>call_made</mat-icon>
-        <span matListItemTitle>Registrar salida</span>
+        @if (!colapsado()) {
+          <span matListItemTitle>Registrar salida</span>
+        }
       </a>
-      <a mat-list-item routerLink="/movimientos/historial" routerLinkActive="activo">
+      <a
+        mat-list-item
+        routerLink="/movimientos/historial"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Historial' : ''"
+        matTooltipPosition="right"
+      >
         <mat-icon matListItemIcon>history</mat-icon>
-        <span matListItemTitle>Historial</span>
+        @if (!colapsado()) {
+          <span matListItemTitle>Historial</span>
+        }
+      </a>
+      <a
+        mat-list-item
+        routerLink="/usuarios"
+        routerLinkActive="activo"
+        [matTooltip]="colapsado() ? 'Usuarios' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon matListItemIcon>group</mat-icon>
+        @if (!colapsado()) {
+          <span matListItemTitle>Usuarios</span>
+        }
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
+      <button
+        mat-icon-button
+        (click)="alternarSidebar()"
+        [attr.aria-label]="colapsado() ? 'Expandir menu' : 'Contraer menu'"
+        matTooltip="{{ colapsado() ? 'Expandir menu' : 'Contraer menu' }}"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
       <span>Gestion de Inventario</span>
       <span class="espaciador"></span>
       @if (usuario) {

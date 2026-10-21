@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>{{ esEdicion ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="guardar()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="campo-completo">
+      <mat-label>Usuario</mat-label>
+      <input matInput formControlName="nombreUsuario" />
+      @if (formulario.get('nombreUsuario')?.hasError('required') && formulario.get('nombreUsuario')?.touched) {
+        <mat-error>El usuario es obligatorio</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo-completo">
+      <mat-label>Nombre completo</mat-label>
+      <input matInput formControlName="nombreCompleto" />
+      @if (formulario.get('nombreCompleto')?.hasError('required') && formulario.get('nombreCompleto')?.touched) {
+        <mat-error>El nombre completo es obligatorio</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo-completo">
+      <mat-label>{{ esEdicion ? 'Nueva contrasena (opcional)' : 'Contrasena' }}</mat-label>
+      <input matInput type="password" formControlName="contrasena" />
+      @if (formulario.get('contrasena')?.hasError('required') && formulario.get('contrasena')?.touched) {
+        <mat-error>La contrasena es obligatoria</mat-error>
+      }
+      @if (formulario.get('contrasena')?.hasError('minlength') && formulario.get('contrasena')?.touched) {
+        <mat-error>La contrasena debe tener al menos 8 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    @if (esEdicion) {
+      <mat-checkbox formControlName="activo">Usuario activo</mat-checkbox>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="guardando()">
+      @if (guardando()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <span>Guardar</span>
+      }
+    </button>
+  </mat-dialog-actions>
+</form>

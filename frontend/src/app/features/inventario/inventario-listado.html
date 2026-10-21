@@ -10,46 +10,15 @@
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 } @else {
-  <div class="tabla-responsiva">
-    <table mat-table [dataSource]="inventario()" class="tabla">
-      <ng-container matColumnDef="codigo">
-        <th mat-header-cell *matHeaderCellDef>Codigo</th>
-        <td mat-cell *matCellDef="let item">{{ item.codigo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>Producto</th>
-        <td mat-cell *matCellDef="let item">{{ item.nombre }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let item">{{ item.precio | number: '1.2-2' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="stockMinimo">
-        <th mat-header-cell *matHeaderCellDef>Stock minimo</th>
-        <td mat-cell *matCellDef="let item">{{ item.stockMinimo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="stockActual">
-        <th mat-header-cell *matHeaderCellDef>Stock actual</th>
-        <td mat-cell *matCellDef="let item">{{ item.stockActual }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="estado">
-        <th mat-header-cell *matHeaderCellDef>Estado</th>
-        <td mat-cell *matCellDef="let item">
-          <mat-chip [class]="claseEstado(item.estado)">{{ item.estado }}</mat-chip>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-    </table>
-
-    @if (inventario().length === 0) {
-      <p class="sin-datos">No hay productos en el inventario</p>
-    }
-  </div>
+  <ag-grid-angular
+    class="ag-theme-quartz tabla-grid"
+    [theme]="'legacy'"
+    [rowData]="inventario()"
+    [columnDefs]="columnas"
+    [defaultColDef]="configuracionPorDefecto"
+    [pagination]="true"
+    [paginationPageSize]="10"
+    [paginationPageSizeSelector]="[5, 10, 25, 50]"
+    [animateRows]="true"
+  ></ag-grid-angular>
 }

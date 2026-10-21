@@ -54,7 +54,7 @@ public class ProductoService : IProductoService
             Precio = dto.Precio,
             StockMinimo = dto.StockMinimo,
             Activo = true,
-            FechaCreacion = DateTime.UtcNow
+            FechaCreacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
         };
 
         var creado = await _productoRepository.CrearAsync(producto);

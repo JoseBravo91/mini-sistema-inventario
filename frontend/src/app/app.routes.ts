@@ -6,6 +6,7 @@ import { ProductosListado } from './features/productos/productos-listado';
 import { MovimientoFormulario } from './features/movimientos/movimiento-formulario';
 import { MovimientoHistorial } from './features/movimientos/movimiento-historial';
 import { InventarioListado } from './features/inventario/inventario-listado';
+import { UsuariosListado } from './features/usuarios/usuarios-listado';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -19,6 +20,7 @@ export const routes: Routes = [
       { path: 'movimientos/entrada', component: MovimientoFormulario, data: { tipo: 'entrada' } },
       { path: 'movimientos/salida', component: MovimientoFormulario, data: { tipo: 'salida' } },
       { path: 'movimientos/historial', component: MovimientoHistorial },
+      { path: 'usuarios', component: UsuariosListado },
       { path: '', redirectTo: 'inventario', pathMatch: 'full' },
     ],
   },

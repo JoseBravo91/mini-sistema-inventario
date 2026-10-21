@@ -1,0 +1,34 @@
+<div class="encabezado">
+  <h2>Usuarios</h2>
+  <button mat-raised-button color="primary" (click)="abrirFormularioCrear()">
+    <mat-icon>add</mat-icon>
+    Nuevo usuario
+  </button>
+</div>
+
+<mat-form-field appearance="outline" class="campo-busqueda">
+  <mat-label>Buscar en cualquier columna</mat-label>
+  <input matInput [formControl]="controlBusqueda" />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+@if (cargando()) {
+  <div class="centrado">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else {
+  <ag-grid-angular
+    class="ag-theme-quartz tabla-grid"
+    [theme]="'legacy'"
+    [rowData]="usuarios()"
+    [columnDefs]="columnas"
+    [defaultColDef]="configuracionPorDefecto"
+    [pagination]="true"
+    [paginationPageSize]="10"
+    [paginationPageSizeSelector]="[5, 10, 25, 50]"
+    [quickFilterText]="textoFiltro"
+    [animateRows]="true"
+    (gridReady)="onGridReady($event)"
+    (cellClicked)="onCeldaClick($event)"
+  ></ag-grid-angular>
+}

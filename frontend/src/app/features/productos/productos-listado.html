@@ -7,7 +7,7 @@
 </div>
 
 <mat-form-field appearance="outline" class="campo-busqueda">
-  <mat-label>Buscar por nombre o codigo</mat-label>
+  <mat-label>Buscar en cualquier columna</mat-label>
   <input matInput [formControl]="controlBusqueda" />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
@@ -17,60 +17,18 @@
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 } @else {
-  <div class="tabla-responsiva">
-    <table mat-table [dataSource]="productos()" class="tabla">
-      <ng-container matColumnDef="codigo">
-        <th mat-header-cell *matHeaderCellDef>Codigo</th>
-        <td mat-cell *matCellDef="let producto">{{ producto.codigo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let producto">{{ producto.nombre }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let producto">{{ producto.precio | number: '1.2-2' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="stockMinimo">
-        <th mat-header-cell *matHeaderCellDef>Stock minimo</th>
-        <td mat-cell *matCellDef="let producto">{{ producto.stockMinimo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="activo">
-        <th mat-header-cell *matHeaderCellDef>Estado</th>
-        <td mat-cell *matCellDef="let producto">
-          <mat-chip [class]="producto.activo ? 'chip-activo' : 'chip-inactivo'">
-            {{ producto.activo ? 'Activo' : 'Inactivo' }}
-          </mat-chip>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let producto">
-          <button mat-icon-button (click)="abrirFormularioEditar(producto)" aria-label="Editar producto">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-    </table>
-
-    @if (productos().length === 0) {
-      <p class="sin-datos">No se encontraron productos</p>
-    }
-
-    <mat-paginator
-      [length]="totalRegistros()"
-      [pageSize]="tamanoPagina"
-      [pageIndex]="pagina"
-      [pageSizeOptions]="[5, 10, 25]"
-      (page)="cambiarPagina($event)"
-    ></mat-paginator>
-  </div>
+  <ag-grid-angular
+    class="ag-theme-quartz tabla-grid"
+    [theme]="'legacy'"
+    [rowData]="productos()"
+    [columnDefs]="columnas"
+    [defaultColDef]="configuracionPorDefecto"
+    [pagination]="true"
+    [paginationPageSize]="10"
+    [paginationPageSizeSelector]="[5, 10, 25, 50]"
+    [quickFilterText]="textoFiltro"
+    [animateRows]="true"
+    (gridReady)="onGridReady($event)"
+    (cellClicked)="onCeldaClick($event)"
+  ></ag-grid-angular>
 }

@@ -25,7 +25,7 @@ public class InventarioDbContext : DbContext
             entidad.Property(u => u.NombreCompleto).HasColumnName("nombre_completo");
             entidad.Property(u => u.Rol).HasColumnName("rol");
             entidad.Property(u => u.Activo).HasColumnName("activo");
-            entidad.Property(u => u.FechaCreacion).HasColumnName("fecha_creacion");
+            entidad.Property(u => u.FechaCreacion).HasColumnName("fecha_creacion").HasColumnType("timestamp without time zone");
         });
 
         modelBuilder.Entity<Producto>(entidad =>
@@ -39,7 +39,7 @@ public class InventarioDbContext : DbContext
             entidad.Property(p => p.Precio).HasColumnName("precio");
             entidad.Property(p => p.StockMinimo).HasColumnName("stock_minimo");
             entidad.Property(p => p.Activo).HasColumnName("activo");
-            entidad.Property(p => p.FechaCreacion).HasColumnName("fecha_creacion");
+            entidad.Property(p => p.FechaCreacion).HasColumnName("fecha_creacion").HasColumnType("timestamp without time zone");
         });
     }
 }

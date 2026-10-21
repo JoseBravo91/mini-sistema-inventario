@@ -1,0 +1,23 @@
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.campo-busqueda {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 16px;
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.tabla-grid {
+  width: 100%;
+  height: 560px;
+}
