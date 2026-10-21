@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UsuarioService } from '../../core/services/usuario.service';
 import { NotificacionService } from '../../core/services/notificacion.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Usuario } from '../../core/models/usuario.model';
 
 @Component({
@@ -29,6 +30,7 @@ export class UsuarioFormulario {
   private readonly formBuilder = inject(FormBuilder);
   private readonly usuarioService = inject(UsuarioService);
   private readonly notificacionService = inject(NotificacionService);
+  private readonly authService = inject(AuthService);
   private readonly dialogRef = inject(MatDialogRef<UsuarioFormulario>);
   usuarioExistente = inject<Usuario | null>(MAT_DIALOG_DATA);
 
@@ -71,6 +73,11 @@ export class UsuarioFormulario {
 
     operacion.subscribe({
       next: () => {
+        // Si el usuario edito su propio perfil, refresca el nombre mostrado en el header sin requerir un nuevo login
+        if (this.esEdicion && this.usuarioExistente!.nombreUsuario === this.authService.usuarioActual()?.nombreUsuario) {
+          this.authService.actualizarNombreCompleto(valores.nombreCompleto!);
+        }
+
         this.notificacionService.mostrarExito(this.esEdicion ? 'Usuario actualizado' : 'Usuario creado');
         this.dialogRef.close(true);
       },

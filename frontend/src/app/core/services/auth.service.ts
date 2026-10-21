@@ -30,6 +30,18 @@ export class AuthService {
     return localStorage.getItem(CLAVE_TOKEN);
   }
 
+  // Actualiza el nombre en cache cuando el usuario edita su propio perfil, sin requerir un nuevo login
+  actualizarNombreCompleto(nombreCompleto: string): void {
+    const actual = this.usuarioActual();
+    if (!actual) {
+      return;
+    }
+
+    const actualizado: LoginResponse = { ...actual, nombreCompleto };
+    localStorage.setItem(CLAVE_USUARIO, JSON.stringify(actualizado));
+    this.usuarioActual.set(actualizado);
+  }
+
   estaAutenticado(): boolean {
     return !!this.obtenerToken();
   }
