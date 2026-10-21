@@ -1,10 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
 import { AgGridAngular } from 'ag-grid-angular';
-import type { ColDef } from 'ag-grid-community';
+import type { ColDef, RowClickedEvent } from 'ag-grid-community';
 import { MovimientoService } from '../../core/services/movimiento.service';
 import { Movimiento } from '../../core/models/movimiento.model';
+import { MovimientoDetalle } from './movimiento-detalle';
 
 @Component({
   selector: 'app-movimiento-historial',
@@ -26,7 +28,7 @@ export class MovimientoHistorial implements OnInit {
       minWidth: 170,
       valueFormatter: (p) => this.formateadorFecha.transform(p.value, 'dd/MM/yyyy HH:mm') ?? '',
     },
-    { headerName: 'Producto', field: 'productoNombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 200 },
+    { headerName: 'Producto', field: 'productoNombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 220 },
     {
       headerName: 'Tipo',
       field: 'tipo',
@@ -36,8 +38,6 @@ export class MovimientoHistorial implements OnInit {
         `<span class="chip-estado ${p.value === 'ENTRADA' ? 'chip-entrada' : 'chip-salida'}">${p.value}</span>`,
     },
     { headerName: 'Cantidad', field: 'cantidad', filter: 'agNumberColumnFilter', minWidth: 120 },
-    { headerName: 'Usuario', field: 'usuario', filter: 'agTextColumnFilter', minWidth: 180 },
-    { headerName: 'Observacion', field: 'observacion', filter: 'agTextColumnFilter', flex: 1, minWidth: 200 },
   ];
 
   configuracionPorDefecto: ColDef = {
@@ -46,7 +46,10 @@ export class MovimientoHistorial implements OnInit {
     floatingFilter: true,
   };
 
-  constructor(private readonly movimientoService: MovimientoService) {}
+  constructor(
+    private readonly movimientoService: MovimientoService,
+    private readonly dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.cargarHistorial();
@@ -61,5 +64,11 @@ export class MovimientoHistorial implements OnInit {
       },
       error: () => this.cargando.set(false),
     });
+  }
+
+  onFilaClick(evento: RowClickedEvent<Movimiento>): void {
+    if (evento.data) {
+      this.dialog.open(MovimientoDetalle, { width: '520px', data: evento.data });
+    }
   }
 }

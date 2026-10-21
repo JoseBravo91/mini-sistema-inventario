@@ -1,0 +1,71 @@
+<div class="encabezado-modal" [class.encabezado-entrada]="movimiento.tipo === 'ENTRADA'" [class.encabezado-salida]="movimiento.tipo === 'SALIDA'">
+  <div class="encabezado-icono">
+    <mat-icon>{{ movimiento.tipo === 'ENTRADA' ? 'call_received' : 'call_made' }}</mat-icon>
+  </div>
+  <div class="encabezado-texto">
+    <span class="encabezado-tipo">{{ movimiento.tipo === 'ENTRADA' ? 'Entrada de inventario' : 'Salida de inventario' }}</span>
+    <span class="encabezado-producto">{{ movimiento.productoNombre }}</span>
+  </div>
+  <button mat-icon-button class="boton-cerrar" (click)="cerrar()" aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="cuerpo-modal">
+  <div class="tarjeta-detalle">
+    <div class="detalle-cantidad">
+      <span class="numero">{{ movimiento.cantidad }}</span>
+      <span class="unidad">unidades</span>
+    </div>
+
+    <div class="detalle-campos">
+      <div class="campo">
+        <span class="etiqueta">Fecha</span>
+        <span class="valor">{{ movimiento.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="campo">
+        <span class="etiqueta">Usuario</span>
+        <span class="valor">{{ movimiento.usuario }}</span>
+      </div>
+      <div class="campo campo-ancho">
+        <span class="etiqueta">Observacion</span>
+        <span class="valor">{{ movimiento.observacion || 'Sin observaciones' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="separador-seccion">
+    <h3>Historial completo del producto</h3>
+    <span class="contador-badge">{{ historialProducto().length }} {{ historialProducto().length === 1 ? 'movimiento' : 'movimientos' }}</span>
+  </div>
+
+  @if (cargandoHistorial()) {
+    <div class="centrado">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+  } @else {
+    <div class="linea-tiempo">
+      @for (item of historialProducto(); track item.id) {
+        <div class="item-tiempo" [class.item-tiempo-actual]="item.id === movimiento.id">
+          <div class="punto" [class.punto-entrada]="item.tipo === 'ENTRADA'" [class.punto-salida]="item.tipo === 'SALIDA'"></div>
+          <div class="contenido-tiempo">
+            <div class="fila-principal">
+              <span class="chip-estado" [class.chip-entrada]="item.tipo === 'ENTRADA'" [class.chip-salida]="item.tipo === 'SALIDA'">
+                {{ item.tipo }}
+              </span>
+              <span class="cantidad-tiempo">{{ item.cantidad }} unidades</span>
+              <span class="fecha-tiempo">{{ item.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <div class="fila-secundaria">
+              <span>{{ item.usuario }}</span>
+              @if (item.observacion) {
+                <span class="punto-separador">&middot;</span>
+                <span class="observacion-tiempo">{{ item.observacion }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

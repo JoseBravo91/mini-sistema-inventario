@@ -1,0 +1,255 @@
+:host {
+  display: block;
+  width: 520px;
+  max-width: 100%;
+}
+
+.encabezado-modal {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 24px 20px;
+  color: #ffffff;
+}
+
+.encabezado-entrada {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+}
+
+.encabezado-salida {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+}
+
+.encabezado-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.encabezado-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.encabezado-tipo {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.encabezado-producto {
+  font-size: 1.1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boton-cerrar {
+  color: #ffffff;
+}
+
+.cuerpo-modal {
+  padding: 20px 24px 24px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.tarjeta-detalle {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 12px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  margin-bottom: 24px;
+}
+
+.detalle-cantidad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  padding: 8px 0;
+  border-right: 1px solid var(--color-border);
+}
+
+.detalle-cantidad .numero {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-foreground);
+  line-height: 1;
+}
+
+.detalle-cantidad .unidad {
+  font-size: 0.72rem;
+  color: var(--color-muted-foreground);
+  margin-top: 2px;
+}
+
+.detalle-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.campo-ancho {
+  grid-column: 1 / -1;
+}
+
+.etiqueta {
+  font-size: 0.72rem;
+  color: var(--color-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.valor {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.separador-seccion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.separador-seccion h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.contador-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted-foreground);
+  background-color: var(--color-muted);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.linea-tiempo {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-tiempo {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding: 0 0 20px 0;
+}
+
+.item-tiempo:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  bottom: -6px;
+  width: 2px;
+  background-color: var(--color-border);
+}
+
+.item-tiempo-actual {
+  background-color: #eff6ff;
+  margin: 0 -12px 20px;
+  padding: 10px 12px 10px;
+  border-radius: 10px;
+}
+
+.item-tiempo-actual:not(:last-child)::before {
+  left: 17px;
+}
+
+.punto {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+  border: 2px solid var(--color-card);
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+.punto-entrada {
+  background-color: var(--color-success);
+}
+
+.punto-salida {
+  background-color: var(--color-destructive);
+}
+
+.contenido-tiempo {
+  flex: 1;
+  min-width: 0;
+}
+
+.fila-principal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cantidad-tiempo {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--color-foreground);
+}
+
+.fecha-tiempo {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--color-muted-foreground);
+}
+
+.fila-secundaria {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--color-muted-foreground);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.observacion-tiempo {
+  font-style: italic;
+}
+
+.punto-separador {
+  opacity: 0.6;
+}
