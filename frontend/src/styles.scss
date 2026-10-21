@@ -24,6 +24,8 @@
   --color-success-bg: #dcfce7;
   --color-warning: #c2410c;
   --color-warning-bg: #ffedd5;
+  --color-info: #d97706;
+  --color-on-info: #ffffff;
   --color-ring: #0369a1;
   --radio-boton: 8px;
 }
@@ -184,4 +186,35 @@ html, body {
 
 .tabla-clickeable .ag-row {
   cursor: pointer;
+}
+
+/* Notificaciones (MatSnackBar): color segun severidad, estandarizado para toda la app */
+.notificacion-exito .mdc-snackbar__surface {
+  background-color: var(--color-success) !important;
+}
+
+.notificacion-info .mdc-snackbar__surface {
+  background-color: var(--color-info) !important;
+}
+
+.notificacion-error .mdc-snackbar__surface {
+  background-color: var(--color-destructive) !important;
+}
+
+.notificacion-exito .mdc-snackbar__label,
+.notificacion-info .mdc-snackbar__label,
+.notificacion-error .mdc-snackbar__label {
+  color: #ffffff !important;
+}
+
+.notificacion-exito .mat-mdc-snack-bar-action,
+.notificacion-info .mat-mdc-snack-bar-action,
+.notificacion-error .mat-mdc-snack-bar-action {
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.notificacion-exito .mat-mdc-button:not(:disabled),
+.notificacion-info .mat-mdc-button:not(:disabled),
+.notificacion-error .mat-mdc-button:not(:disabled) {
+  color: #ffffff !important;
 }

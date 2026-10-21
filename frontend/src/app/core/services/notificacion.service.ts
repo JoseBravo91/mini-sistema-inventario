@@ -10,7 +10,7 @@ export class NotificacionService {
       duration: 5000,
       panelClass: ['notificacion-error'],
       horizontalPosition: 'end',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -19,7 +19,16 @@ export class NotificacionService {
       duration: 3000,
       panelClass: ['notificacion-exito'],
       horizontalPosition: 'end',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
+    });
+  }
+
+  mostrarInfo(mensaje: string): void {
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 4000,
+      panelClass: ['notificacion-info'],
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

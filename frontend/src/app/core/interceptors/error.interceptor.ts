@@ -20,7 +20,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate(['/login']);
       }
 
-      notificacionService.mostrarError(mensaje);
+      // El rate limiting es informativo (no indica un dato incorrecto), el resto son errores reales
+      if (error.status === 429) {
+        notificacionService.mostrarInfo(mensaje);
+      } else {
+        notificacionService.mostrarError(mensaje);
+      }
+
       return throwError(() => error);
     })
   );
@@ -34,7 +40,7 @@ function obtenerMensaje(error: HttpErrorResponse): string {
     return 'Debe iniciar sesion nuevamente';
   }
   if (error.status === 429) {
-    return 'Demasiados intentos, espere un momento';
+    return 'Demasiados intentos, espere un momento antes de volver a intentar';
   }
   if (error.error?.detail) {
     return error.error.detail;
