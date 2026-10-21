@@ -1,17 +1,34 @@
 .contenedor {
+  display: flex;
   height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .menu-lateral {
+  display: block;
+  flex: 0 0 auto;
   width: 240px;
-  border-right: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   background-color: var(--color-sidebar-bg);
-  transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 220ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .menu-lateral-colapsado {
   width: 72px;
+}
+
+/* El area principal ocupa siempre el resto del ancho disponible: se expande
+   automaticamente cuando el sidebar se colapsa, sin depender de margenes calculados */
+.area-principal {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .marca-sidebar {
@@ -33,29 +50,35 @@
   min-width: 36px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.16);
-  color: var(--color-sidebar-foreground);
+  color: #ffffff;
 }
 
 .marca-texto {
   font-weight: 600;
   font-size: 1rem;
-  color: var(--color-sidebar-foreground);
+  color: #ffffff;
 }
 
 .marca-texto strong {
   font-weight: 800;
 }
 
-/* Texto e iconos de navegacion en blanco para contrastar con el fondo azul del sidebar */
+/* Texto e iconos de navegacion en blanco: se fuerzan las variables MDC ademas del color plano */
 .menu-lateral .mat-mdc-list-item {
-  color: rgba(255, 255, 255, 0.85);
+  --mdc-list-list-item-label-text-color: rgba(255, 255, 255, 0.85);
+  --mat-list-list-item-leading-icon-color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
   border-radius: 8px;
   margin: 2px 8px;
   width: auto;
 }
 
+.menu-lateral .mat-mdc-list-item .mdc-list-item__primary-text {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
 .menu-lateral .mat-mdc-list-item .mat-icon {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 .menu-lateral .mat-mdc-list-item:hover:not(.activo) {
@@ -63,10 +86,13 @@
 }
 
 .activo {
+  --mdc-list-list-item-label-text-color: #ffffff;
+  --mat-list-list-item-leading-icon-color: #ffffff;
   background-color: var(--color-sidebar-bg-activo) !important;
   color: #ffffff !important;
 }
 
+.activo .mdc-list-item__primary-text,
 .activo .mat-icon {
   color: #ffffff !important;
 }
@@ -80,10 +106,12 @@
   font-size: 0.9rem;
 }
 
+/* El contenido siempre ocupa el 100% del ancho disponible, sin tope maximo, para aprovechar
+   el espacio que libera el sidebar al colapsarse */
 .contenido {
   padding: 24px;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  flex: 1 1 auto;
 }
 
 @media (max-width: 768px) {

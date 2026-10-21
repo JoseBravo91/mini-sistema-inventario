@@ -9,9 +9,9 @@
   --color-accent: #0369a1;
   --color-accent-hover: #075985;
   --color-on-accent: #ffffff;
-  --color-sidebar-bg: #0ea5e9;
-  --color-sidebar-bg-hover: rgba(255, 255, 255, 0.1);
-  --color-sidebar-bg-activo: rgba(255, 255, 255, 0.18);
+  --color-sidebar-bg: #0f172a;
+  --color-sidebar-bg-hover: rgba(255, 255, 255, 0.06);
+  --color-sidebar-bg-activo: var(--color-accent);
   --color-sidebar-foreground: #ffffff;
   --color-background: #f8fafc;
   --color-foreground: #020617;
@@ -51,6 +51,7 @@ html, body {
 .mat-toolbar.mat-primary {
   background-color: var(--color-primary) !important;
   color: var(--color-on-primary) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Botones modernos: esquinas mas cerradas, sin elevacion pesada, transicion suave al hover */
@@ -179,4 +180,8 @@ html, body {
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--color-border);
+}
+
+.tabla-clickeable .ag-row {
+  cursor: pointer;
 }

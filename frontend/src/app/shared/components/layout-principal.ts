@@ -3,7 +3,6 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../core/services/auth.service';
@@ -20,7 +19,6 @@ const CLAVE_SIDEBAR_COLAPSADO = 'inventario_sidebar_colapsado';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatSidenavModule,
     MatListModule,
     MatTooltipModule,
   ],
