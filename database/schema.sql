@@ -42,7 +42,10 @@ CREATE TABLE productos (
     precio NUMERIC(12, 2) NOT NULL CHECK (precio >= 0),
     stock_minimo INTEGER NOT NULL DEFAULT 10 CHECK (stock_minimo >= 0),
     activo BOOLEAN NOT NULL DEFAULT TRUE,
-    fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW()
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
+    fecha_actualizacion TIMESTAMP,
+    creado_por INTEGER REFERENCES usuarios(id),
+    actualizado_por INTEGER REFERENCES usuarios(id)
 );
 
 -- Tabla de movimientos de inventario (entradas y salidas)
@@ -185,13 +188,13 @@ INSERT INTO usuarios (nombre_usuario, contrasena_hash, nombre_completo, rol)
 VALUES ('admin', '$2b$11$ftF0miSCvt6x29WZbczQg.xJ16Y2tq4LoYffARBV04nuKV6mK2DhS', 'Administrador del Sistema', 'ADMIN');
 
 -- Datos semilla: productos de ejemplo
-INSERT INTO productos (codigo, nombre, descripcion, precio, stock_minimo) VALUES
-('PRD-001', 'Laptop Dell Latitude 5440', 'Laptop empresarial 14 pulgadas, 16GB RAM', 1250.00, 5),
-('PRD-002', 'Mouse Logitech MX Master 3', 'Mouse inalambrico ergonomico', 95.50, 15),
-('PRD-003', 'Teclado Mecanico Keychron K8', 'Teclado mecanico inalambrico switches rojos', 110.00, 10),
-('PRD-004', 'Monitor LG 27UP850 4K', 'Monitor 27 pulgadas UHD con USB-C', 420.00, 8),
-('PRD-005', 'Docking Station USB-C Dell', 'Base de conexion universal con HDMI y Ethernet', 180.00, 12),
-('PRD-006', 'Webcam Logitech C920', 'Camara web HD 1080p', 75.00, 20);
+INSERT INTO productos (codigo, nombre, descripcion, precio, stock_minimo, creado_por) VALUES
+('PRD-001', 'Laptop Dell Latitude 5440', 'Laptop empresarial 14 pulgadas, 16GB RAM', 1250.00, 5, 1),
+('PRD-002', 'Mouse Logitech MX Master 3', 'Mouse inalambrico ergonomico', 95.50, 15, 1),
+('PRD-003', 'Teclado Mecanico Keychron K8', 'Teclado mecanico inalambrico switches rojos', 110.00, 10, 1),
+('PRD-004', 'Monitor LG 27UP850 4K', 'Monitor 27 pulgadas UHD con USB-C', 420.00, 8, 1),
+('PRD-005', 'Docking Station USB-C Dell', 'Base de conexion universal con HDMI y Ethernet', 180.00, 12, 1),
+('PRD-006', 'Webcam Logitech C920', 'Camara web HD 1080p', 75.00, 20, 1);
 
 -- Movimientos iniciales para que el inventario semilla tenga stock real
 CALL sp_registrar_entrada(1, 20, 1, 'Carga inicial de inventario');

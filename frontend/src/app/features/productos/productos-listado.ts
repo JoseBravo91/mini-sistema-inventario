@@ -12,6 +12,7 @@ import { debounceTime } from 'rxjs';
 import { ProductoService } from '../../core/services/producto.service';
 import { Producto } from '../../core/models/producto.model';
 import { ProductoFormulario } from './producto-formulario';
+import { ProductoDetalleDialog } from './producto-detalle-dialog';
 
 @Component({
   selector: 'app-productos-listado',
@@ -98,9 +99,19 @@ export class ProductosListado implements OnInit {
   onGridReady(_evento: GridReadyEvent): void {}
 
   onCeldaClick(evento: CellClickedEvent<Producto>): void {
-    if (evento.column.getColId() === 'acciones' && evento.data) {
-      this.abrirFormularioEditar(evento.data);
+    if (!evento.data) {
+      return;
     }
+
+    if (evento.column.getColId() === 'acciones') {
+      this.abrirFormularioEditar(evento.data);
+    } else {
+      this.abrirDetalle(evento.data);
+    }
+  }
+
+  abrirDetalle(producto: Producto): void {
+    this.dialog.open(ProductoDetalleDialog, { width: '440px', data: producto });
   }
 
   abrirFormularioCrear(): void {

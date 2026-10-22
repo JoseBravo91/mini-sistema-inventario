@@ -1,4 +1,4 @@
-// Representacion de un producto segun la API
+// Representacion de un producto segun la API, incluye trazabilidad de creacion y edicion
 export interface Producto {
   id: number;
   codigo: string;
@@ -7,6 +7,10 @@ export interface Producto {
   precio: number;
   stockMinimo: number;
   activo: boolean;
+  fechaCreacion: string;
+  fechaActualizacion: string | null;
+  creadoPorNombre: string | null;
+  actualizadoPorNombre: string | null;
 }
 
 // Datos para crear un nuevo producto

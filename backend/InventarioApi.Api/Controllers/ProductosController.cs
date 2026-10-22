@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using InventarioApi.Application.Dtos;
 using InventarioApi.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -35,14 +36,20 @@ public class ProductosController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Crear([FromBody] CrearProductoDto dto)
     {
-        var creado = await _productoService.CrearAsync(dto);
+        var creado = await _productoService.CrearAsync(dto, ObtenerUsuarioId());
         return CreatedAtAction(nameof(ObtenerPorId), new { id = creado.Id }, creado);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarProductoDto dto)
     {
-        var actualizado = await _productoService.ActualizarAsync(id, dto);
+        var actualizado = await _productoService.ActualizarAsync(id, dto, ObtenerUsuarioId());
         return Ok(actualizado);
+    }
+
+    private int ObtenerUsuarioId()
+    {
+        var claim = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+        return int.Parse(claim!);
     }
 }

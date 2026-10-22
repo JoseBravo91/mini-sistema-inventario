@@ -40,6 +40,12 @@ public class InventarioDbContext : DbContext
             entidad.Property(p => p.StockMinimo).HasColumnName("stock_minimo");
             entidad.Property(p => p.Activo).HasColumnName("activo");
             entidad.Property(p => p.FechaCreacion).HasColumnName("fecha_creacion").HasColumnType("timestamp without time zone");
+            entidad.Property(p => p.FechaActualizacion).HasColumnName("fecha_actualizacion").HasColumnType("timestamp without time zone");
+            entidad.Property(p => p.CreadoPor).HasColumnName("creado_por");
+            entidad.Property(p => p.ActualizadoPor).HasColumnName("actualizado_por");
+
+            entidad.HasOne(p => p.UsuarioCreador).WithMany().HasForeignKey(p => p.CreadoPor);
+            entidad.HasOne(p => p.UsuarioActualizador).WithMany().HasForeignKey(p => p.ActualizadoPor);
         });
     }
 }

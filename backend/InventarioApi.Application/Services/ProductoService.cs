@@ -38,7 +38,7 @@ public class ProductoService : IProductoService
         return MapearADto(producto);
     }
 
-    public async Task<ProductoDto> CrearAsync(CrearProductoDto dto)
+    public async Task<ProductoDto> CrearAsync(CrearProductoDto dto, int usuarioId)
     {
         var existente = await _productoRepository.ObtenerPorCodigoAsync(dto.Codigo);
         if (existente is not null)
@@ -54,16 +54,19 @@ public class ProductoService : IProductoService
             Precio = dto.Precio,
             StockMinimo = dto.StockMinimo,
             Activo = true,
-            FechaCreacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified)
+            FechaCreacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
+            CreadoPor = usuarioId
         };
 
         var creado = await _productoRepository.CrearAsync(producto);
-        _logger.LogInformation("Producto creado: {Codigo} - {Nombre}", creado.Codigo, creado.Nombre);
+        _logger.LogInformation("Producto creado: {Codigo} - {Nombre} por usuario {UsuarioId}", creado.Codigo, creado.Nombre, usuarioId);
 
-        return MapearADto(creado);
+        // Se vuelve a leer para traer el nombre del usuario creador ya resuelto via Include
+        var recargado = await _productoRepository.ObtenerPorIdAsync(creado.Id) ?? creado;
+        return MapearADto(recargado);
     }
 
-    public async Task<ProductoDto> ActualizarAsync(int id, ActualizarProductoDto dto)
+    public async Task<ProductoDto> ActualizarAsync(int id, ActualizarProductoDto dto, int usuarioId)
     {
         var producto = await _productoRepository.ObtenerPorIdAsync(id)
             ?? throw new ExcepcionNoEncontrado($"No se encontro el producto con id {id}");
@@ -73,13 +76,27 @@ public class ProductoService : IProductoService
         producto.Precio = dto.Precio;
         producto.StockMinimo = dto.StockMinimo;
         producto.Activo = dto.Activo;
+        producto.FechaActualizacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+        producto.ActualizadoPor = usuarioId;
 
         await _productoRepository.ActualizarAsync(producto);
-        _logger.LogInformation("Producto actualizado: {Id} - {Nombre}", producto.Id, producto.Nombre);
+        _logger.LogInformation("Producto actualizado: {Id} - {Nombre} por usuario {UsuarioId}", producto.Id, producto.Nombre, usuarioId);
 
-        return MapearADto(producto);
+        var recargado = await _productoRepository.ObtenerPorIdAsync(id) ?? producto;
+        return MapearADto(recargado);
     }
 
-    private static ProductoDto MapearADto(Producto producto) =>
-        new(producto.Id, producto.Codigo, producto.Nombre, producto.Descripcion, producto.Precio, producto.StockMinimo, producto.Activo);
+    private static ProductoDto MapearADto(Producto producto) => new(
+        producto.Id,
+        producto.Codigo,
+        producto.Nombre,
+        producto.Descripcion,
+        producto.Precio,
+        producto.StockMinimo,
+        producto.Activo,
+        producto.FechaCreacion,
+        producto.FechaActualizacion,
+        producto.UsuarioCreador?.NombreCompleto,
+        producto.UsuarioActualizador?.NombreCompleto
+    );
 }

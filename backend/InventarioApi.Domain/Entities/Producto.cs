@@ -11,4 +11,10 @@ public class Producto
     public int StockMinimo { get; set; }
     public bool Activo { get; set; } = true;
     public DateTime FechaCreacion { get; set; }
+    public DateTime? FechaActualizacion { get; set; }
+    public int? CreadoPor { get; set; }
+    public int? ActualizadoPor { get; set; }
+
+    public Usuario? UsuarioCreador { get; set; }
+    public Usuario? UsuarioActualizador { get; set; }
 }

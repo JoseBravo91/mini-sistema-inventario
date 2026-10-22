@@ -16,7 +16,11 @@ public class ProductoRepository : IProductoRepository
 
     public async Task<(IReadOnlyList<Producto> Items, int Total)> ObtenerPaginadoAsync(int pagina, int tamanoPagina, string? busqueda)
     {
-        var query = _context.Productos.AsNoTracking().AsQueryable();
+        var query = _context.Productos
+            .AsNoTracking()
+            .Include(p => p.UsuarioCreador)
+            .Include(p => p.UsuarioActualizador)
+            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(busqueda))
         {
@@ -37,7 +41,10 @@ public class ProductoRepository : IProductoRepository
 
     public async Task<Producto?> ObtenerPorIdAsync(int id)
     {
-        return await _context.Productos.FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Productos
+            .Include(p => p.UsuarioCreador)
+            .Include(p => p.UsuarioActualizador)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<Producto?> ObtenerPorCodigoAsync(string codigo)

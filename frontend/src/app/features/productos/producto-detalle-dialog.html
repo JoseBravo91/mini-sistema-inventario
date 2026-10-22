@@ -1,0 +1,72 @@
+<div class="encabezado">
+  <div class="encabezado-icono">
+    <mat-icon>category</mat-icon>
+  </div>
+  <div class="encabezado-texto">
+    <span class="encabezado-codigo">{{ producto.codigo }}</span>
+    <span class="encabezado-nombre">{{ producto.nombre }}</span>
+  </div>
+  <button mat-icon-button class="boton-cerrar" (click)="cerrar()" aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="cuerpo">
+  <div class="fila-principal">
+    <div class="precio">
+      <span class="etiqueta">Precio</span>
+      <span class="valor-grande">{{ producto.precio | number: '1.2-2' }}</span>
+    </div>
+    <span class="chip-estado" [class.chip-activo]="producto.activo" [class.chip-inactivo]="!producto.activo">
+      {{ producto.activo ? 'Activo' : 'Inactivo' }}
+    </span>
+  </div>
+
+  @if (producto.descripcion) {
+    <p class="descripcion">{{ producto.descripcion }}</p>
+  }
+
+  <div class="campos">
+    <div class="campo">
+      <span class="etiqueta">Stock minimo</span>
+      <span class="valor">{{ producto.stockMinimo }} unidades</span>
+    </div>
+  </div>
+
+  <div class="separador-seccion">
+    <mat-icon>history</mat-icon>
+    <h3>Trazabilidad</h3>
+  </div>
+
+  <div class="linea-tiempo">
+    <div class="item-tiempo">
+      <div class="punto punto-creacion"></div>
+      <div class="contenido-tiempo">
+        <span class="accion">Producto creado</span>
+        <span class="detalle-tiempo">
+          {{ producto.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}
+          @if (producto.creadoPorNombre) {
+            <span class="punto-separador">&middot;</span> {{ producto.creadoPorNombre }}
+          }
+        </span>
+      </div>
+    </div>
+
+    @if (producto.fechaActualizacion) {
+      <div class="item-tiempo">
+        <div class="punto punto-actualizacion"></div>
+        <div class="contenido-tiempo">
+          <span class="accion">Ultima actualizacion</span>
+          <span class="detalle-tiempo">
+            {{ producto.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}
+            @if (producto.actualizadoPorNombre) {
+              <span class="punto-separador">&middot;</span> {{ producto.actualizadoPorNombre }}
+            }
+          </span>
+        </div>
+      </div>
+    } @else {
+      <p class="sin-cambios">Sin modificaciones desde su creacion</p>
+    }
+  </div>
+</div>
