@@ -210,6 +210,13 @@ html, body {
   cursor: pointer;
 }
 
+/* ag-Grid: el filtro de fecha agrega un icono de lupa que queda superpuesto sobre el
+   input nativo de fecha/hora (el CSS de ag-Grid no reserva espacio para inputs de
+   tipo date/datetime-local como si lo hace con los de texto), por lo que se oculta */
+.ag-date-floating-filter-wrapper .ag-input-field-search-icon {
+  display: none;
+}
+
 /* Notificaciones (MatSnackBar): color segun severidad, estandarizado para toda la app */
 .notificacion-exito .mdc-snackbar__surface {
   background-color: var(--color-success) !important;

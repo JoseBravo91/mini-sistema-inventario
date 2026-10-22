@@ -1,26 +1,43 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { Login } from './features/login/login';
 import { LayoutPrincipal } from './shared/components/layout-principal';
-import { ProductosListado } from './features/productos/productos-listado';
-import { MovimientoFormulario } from './features/movimientos/movimiento-formulario';
-import { MovimientoHistorial } from './features/movimientos/movimiento-historial';
-import { InventarioListado } from './features/inventario/inventario-listado';
-import { UsuariosListado } from './features/usuarios/usuarios-listado';
 
 export const routes: Routes = [
-  { path: 'login', component: Login },
+  {
+    path: 'login',
+    loadComponent: () => import('./features/login/login').then((m) => m.Login),
+  },
   {
     path: '',
     component: LayoutPrincipal,
     canActivate: [authGuard],
     children: [
-      { path: 'inventario', component: InventarioListado },
-      { path: 'productos', component: ProductosListado },
-      { path: 'movimientos/entrada', component: MovimientoFormulario, data: { tipo: 'entrada' } },
-      { path: 'movimientos/salida', component: MovimientoFormulario, data: { tipo: 'salida' } },
-      { path: 'movimientos/historial', component: MovimientoHistorial },
-      { path: 'usuarios', component: UsuariosListado },
+      {
+        path: 'inventario',
+        loadComponent: () => import('./features/inventario/inventario-listado').then((m) => m.InventarioListado),
+      },
+      {
+        path: 'productos',
+        loadComponent: () => import('./features/productos/productos-listado').then((m) => m.ProductosListado),
+      },
+      {
+        path: 'movimientos/entrada',
+        loadComponent: () => import('./features/movimientos/movimiento-formulario').then((m) => m.MovimientoFormulario),
+        data: { tipo: 'entrada' },
+      },
+      {
+        path: 'movimientos/salida',
+        loadComponent: () => import('./features/movimientos/movimiento-formulario').then((m) => m.MovimientoFormulario),
+        data: { tipo: 'salida' },
+      },
+      {
+        path: 'movimientos/historial',
+        loadComponent: () => import('./features/movimientos/movimiento-historial').then((m) => m.MovimientoHistorial),
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () => import('./features/usuarios/usuarios-listado').then((m) => m.UsuariosListado),
+      },
       { path: '', redirectTo: 'inventario', pathMatch: 'full' },
     ],
   },

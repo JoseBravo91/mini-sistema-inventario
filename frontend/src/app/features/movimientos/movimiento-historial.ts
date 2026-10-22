@@ -25,6 +25,8 @@ export class MovimientoHistorial implements OnInit {
       headerName: 'Fecha',
       field: 'fecha',
       filter: 'agDateColumnFilter',
+      suppressFloatingFilterButton: true,
+      suppressHeaderFilterButton: true,
       minWidth: 170,
       valueFormatter: (p) => this.formateadorFecha.transform(p.value, 'dd/MM/yyyy HH:mm') ?? '',
     },
