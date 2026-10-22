@@ -1,0 +1,332 @@
+.encabezado {
+  margin-bottom: 20px;
+}
+
+.encabezado h2 {
+  margin: 0 0 2px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--color-muted-foreground);
+  font-size: 0.88rem;
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.sin-datos {
+  margin: 0;
+  padding: 8px 0;
+  color: var(--color-muted-foreground);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* KPIs */
+.grid-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tarjeta-kpi {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.kpi-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 10px;
+}
+
+.kpi-icono-accent {
+  background-color: rgba(3, 105, 161, 0.12);
+  color: var(--color-accent);
+}
+
+.kpi-icono-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.kpi-icono-warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.kpi-icono-primary {
+  background-color: rgba(15, 23, 42, 0.08);
+  color: var(--color-primary);
+}
+
+.kpi-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.kpi-valor {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-foreground);
+  line-height: 1.1;
+}
+
+.kpi-etiqueta {
+  font-size: 0.74rem;
+  color: var(--color-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Destacados */
+.grid-destacados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tarjeta-destacado {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.destacado-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--color-muted-foreground);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.destacado-encabezado mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent);
+}
+
+.destacado-cuerpo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.destacado-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 10px;
+  background-color: var(--color-muted);
+  overflow: hidden;
+}
+
+.destacado-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destacado-imagen mat-icon {
+  color: var(--color-muted-foreground);
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.destacado-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.destacado-nombre {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.destacado-codigo {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.76rem;
+  color: var(--color-muted-foreground);
+}
+
+.destacado-valor {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Graficos */
+.grid-graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tarjeta-grafico {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.tarjeta-grafico h3 {
+  margin: 0 0 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.contenedor-grafico {
+  position: relative;
+  height: 260px;
+}
+
+/* Tablas / listas */
+.grid-tablas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta-lista {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.tarjeta-lista h3 {
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.lista-critica,
+.lista-actividad {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.fila-critica,
+.fila-actividad {
+  display: grid;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fila-critica {
+  grid-template-columns: 36px 1fr auto auto;
+}
+
+.fila-actividad {
+  grid-template-columns: auto 1fr auto;
+}
+
+.lista-critica > *:last-child,
+.lista-actividad > *:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fila-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background-color: var(--color-muted);
+  overflow: hidden;
+}
+
+.fila-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fila-imagen mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-muted-foreground);
+}
+
+.fila-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.fila-nombre {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fila-codigo {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.74rem;
+  color: var(--color-muted-foreground);
+}
+
+.fila-stock {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.fila-cantidad {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+}

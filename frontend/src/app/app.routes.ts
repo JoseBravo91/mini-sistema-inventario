@@ -13,6 +13,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: 'dashboard',
+        loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+      },
+      {
         path: 'inventario',
         loadComponent: () => import('./features/inventario/inventario-listado').then((m) => m.InventarioListado),
       },
@@ -38,8 +42,8 @@ export const routes: Routes = [
         path: 'usuarios',
         loadComponent: () => import('./features/usuarios/usuarios-listado').then((m) => m.UsuariosListado),
       },
-      { path: '', redirectTo: 'inventario', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-  { path: '**', redirectTo: 'inventario' },
+  { path: '**', redirectTo: 'dashboard' },
 ];

@@ -47,7 +47,7 @@ export class Login {
     const { nombreUsuario, contrasena } = this.formulario.getRawValue();
 
     this.authService.login({ nombreUsuario: nombreUsuario!, contrasena: contrasena! }).subscribe({
-      next: () => this.router.navigate(['/inventario']),
+      next: () => this.router.navigate(['/dashboard']),
       error: () => this.cargando.set(false),
     });
   }

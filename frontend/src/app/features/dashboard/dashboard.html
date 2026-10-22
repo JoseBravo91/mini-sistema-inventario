@@ -1,0 +1,186 @@
+<div class="encabezado">
+  <h2>Dashboard</h2>
+  <p class="subtitulo">Resumen general del inventario, productos y movimientos</p>
+</div>
+
+@if (cargando()) {
+  <div class="centrado">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else {
+  <div class="grid-kpis">
+    <div class="tarjeta-kpi">
+      <div class="kpi-icono kpi-icono-accent"><mat-icon>category</mat-icon></div>
+      <div class="kpi-texto">
+        <span class="kpi-valor">{{ totalProductosActivos() }}</span>
+        <span class="kpi-etiqueta">Productos activos</span>
+      </div>
+    </div>
+    <div class="tarjeta-kpi">
+      <div class="kpi-icono kpi-icono-success"><mat-icon>inventory_2</mat-icon></div>
+      <div class="kpi-texto">
+        <span class="kpi-valor">{{ totalUnidadesStock() | number }}</span>
+        <span class="kpi-etiqueta">Unidades en stock</span>
+      </div>
+    </div>
+    <div class="tarjeta-kpi">
+      <div class="kpi-icono kpi-icono-warning"><mat-icon>warning</mat-icon></div>
+      <div class="kpi-texto">
+        <span class="kpi-valor">{{ productosCriticos().length }}</span>
+        <span class="kpi-etiqueta">Con stock bajo o agotado</span>
+      </div>
+    </div>
+    <div class="tarjeta-kpi">
+      <div class="kpi-icono kpi-icono-primary"><mat-icon>swap_vert</mat-icon></div>
+      <div class="kpi-texto">
+        <span class="kpi-valor">{{ totalEntradas() }} / {{ totalSalidas() }}</span>
+        <span class="kpi-etiqueta">Entradas / Salidas registradas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-destacados">
+    <div class="tarjeta-destacado">
+      <div class="destacado-encabezado">
+        <mat-icon>trending_up</mat-icon>
+        <span>Producto mas vendido</span>
+      </div>
+      @if (productoMasVendido(); as producto) {
+        <div class="destacado-cuerpo">
+          <div class="destacado-imagen">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" alt="" />
+            } @else {
+              <mat-icon>inventory_2</mat-icon>
+            }
+          </div>
+          <div class="destacado-info">
+            <span class="destacado-nombre">{{ producto.nombre }}</span>
+            <span class="destacado-codigo">{{ producto.codigo }}</span>
+            <span class="destacado-valor">{{ producto.etiqueta }}</span>
+          </div>
+        </div>
+      } @else {
+        <p class="sin-datos">Aun no hay salidas registradas</p>
+      }
+    </div>
+
+    <div class="tarjeta-destacado">
+      <div class="destacado-encabezado">
+        <mat-icon>stacked_bar_chart</mat-icon>
+        <span>Producto con mas stock</span>
+      </div>
+      @if (productoConMasStock(); as producto) {
+        <div class="destacado-cuerpo">
+          <div class="destacado-imagen">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" alt="" />
+            } @else {
+              <mat-icon>inventory_2</mat-icon>
+            }
+          </div>
+          <div class="destacado-info">
+            <span class="destacado-nombre">{{ producto.nombre }}</span>
+            <span class="destacado-codigo">{{ producto.codigo }}</span>
+            <span class="destacado-valor">{{ producto.etiqueta }}</span>
+          </div>
+        </div>
+      } @else {
+        <p class="sin-datos">Sin datos de inventario</p>
+      }
+    </div>
+
+    <div class="tarjeta-destacado">
+      <div class="destacado-encabezado">
+        <mat-icon>update</mat-icon>
+        <span>Producto mas actualizado</span>
+      </div>
+      @if (productoMasActualizado(); as producto) {
+        <div class="destacado-cuerpo">
+          <div class="destacado-imagen">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" alt="" />
+            } @else {
+              <mat-icon>inventory_2</mat-icon>
+            }
+          </div>
+          <div class="destacado-info">
+            <span class="destacado-nombre">{{ producto.nombre }}</span>
+            <span class="destacado-codigo">{{ producto.codigo }}</span>
+            <span class="destacado-valor">{{ producto.etiqueta }}</span>
+          </div>
+        </div>
+      } @else {
+        <p class="sin-datos">Aun no hay productos editados</p>
+      }
+    </div>
+  </div>
+
+  <div class="grid-graficos">
+    <div class="tarjeta-grafico">
+      <h3>Movimientos de los ultimos 7 dias</h3>
+      <div class="contenedor-grafico">
+        <canvas baseChart [data]="datosMovimientos()" [options]="opcionesMovimientos" type="bar"></canvas>
+      </div>
+    </div>
+    <div class="tarjeta-grafico">
+      <h3>Estado del inventario</h3>
+      <div class="contenedor-grafico">
+        <canvas baseChart [data]="datosEstado()" [options]="opcionesEstado" type="doughnut"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-tablas">
+    <div class="tarjeta-lista">
+      <h3>Productos con stock critico</h3>
+      @if (productosCriticos().length === 0) {
+        <p class="sin-datos">Todos los productos estan en niveles normales</p>
+      } @else {
+        <div class="lista-critica">
+          @for (item of productosCriticos(); track item.productoId) {
+            <div class="fila-critica">
+              <div class="fila-imagen">
+                @if (item.imagenUrl) {
+                  <img [src]="item.imagenUrl" alt="" />
+                } @else {
+                  <mat-icon>inventory_2</mat-icon>
+                }
+              </div>
+              <div class="fila-info">
+                <span class="fila-nombre">{{ item.nombre }}</span>
+                <span class="fila-codigo">{{ item.codigo }}</span>
+              </div>
+              <span class="chip-estado" [class.chip-bajo]="item.estado === 'BAJO'" [class.chip-agotado]="item.estado === 'AGOTADO'">
+                {{ item.estado }}
+              </span>
+              <span class="fila-stock">{{ item.stockActual }} / {{ item.stockMinimo }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="tarjeta-lista">
+      <h3>Actividad reciente</h3>
+      @if (actividadReciente().length === 0) {
+        <p class="sin-datos">Sin movimientos registrados</p>
+      } @else {
+        <div class="lista-actividad">
+          @for (mov of actividadReciente(); track mov.id) {
+            <div class="fila-actividad">
+              <span class="chip-estado" [class.chip-entrada]="mov.tipo === 'ENTRADA'" [class.chip-salida]="mov.tipo === 'SALIDA'">
+                {{ mov.tipo }}
+              </span>
+              <div class="fila-info">
+                <span class="fila-nombre">{{ mov.productoNombre }}</span>
+                <span class="fila-codigo">{{ mov.fecha | date: 'dd/MM/yyyy HH:mm' }} &middot; {{ mov.usuario }}</span>
+              </div>
+              <span class="fila-cantidad">{{ mov.cantidad }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}
