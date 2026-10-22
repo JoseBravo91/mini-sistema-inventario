@@ -1,0 +1,124 @@
+:host {
+  display: block;
+  width: 520px;
+  max-width: 100%;
+}
+
+mat-paginator {
+  margin: 4px -24px -24px;
+  background: transparent;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.campo-busqueda {
+  width: 100%;
+}
+
+.tabla-resumen {
+  max-height: 360px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 90px 1fr 70px 90px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.fila-encabezado {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  padding: 0;
+}
+
+.col-orden {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-muted-foreground);
+  text-align: left;
+}
+
+.col-orden:hover {
+  color: var(--color-accent);
+}
+
+.col-orden.col-stock,
+.col-orden.col-estado {
+  justify-content: flex-end;
+}
+
+.col-orden mat-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: var(--color-accent);
+}
+
+.fila-dato {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--color-foreground);
+  transition: background-color 120ms ease;
+}
+
+.fila-dato:last-child {
+  border-bottom: none;
+}
+
+.fila-dato:hover {
+  background-color: var(--color-background);
+}
+
+.mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
+.nombre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.col-stock {
+  text-align: right;
+}
+
+.col-estado {
+  text-align: right;
+}
+
+.sin-resultados {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-muted-foreground);
+  font-size: 0.85rem;
+}

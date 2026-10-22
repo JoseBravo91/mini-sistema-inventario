@@ -15,14 +15,24 @@
     <div class="fila-campos">
       <mat-form-field appearance="outline" class="campo campo-producto">
         <mat-label>Producto</mat-label>
-        <mat-icon matPrefix>inventory_2</mat-icon>
-        <mat-select formControlName="productoId">
-          @for (producto of productos(); track producto.id) {
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          type="text"
+          placeholder="Busca por codigo o nombre..."
+          [value]="textoBusquedaProducto()"
+          (input)="onBusquedaProductoInput($event)"
+          [matAutocomplete]="autocompletarProducto"
+        />
+        <mat-autocomplete #autocompletarProducto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
+          @for (producto of productosFiltrados(); track producto.id) {
             <mat-option [value]="producto.id">{{ producto.codigo }} &middot; {{ producto.nombre }}</mat-option>
+          } @empty {
+            <mat-option disabled>Sin resultados</mat-option>
           }
-        </mat-select>
+        </mat-autocomplete>
         @if (formulario.get('productoId')?.hasError('required') && formulario.get('productoId')?.touched) {
-          <mat-error>Debe seleccionar un producto</mat-error>
+          <mat-error>Debe seleccionar un producto de la lista</mat-error>
         }
       </mat-form-field>
 
@@ -38,6 +48,11 @@
         }
       </mat-form-field>
     </div>
+
+    <button type="button" class="enlace-inventario" (click)="abrirInventario()">
+      <mat-icon>inventory_2</mat-icon>
+      Ver inventario actual
+    </button>
 
     @if (inventarioSeleccionado(); as info) {
       <div class="panel-stock">

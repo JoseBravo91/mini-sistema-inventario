@@ -1,0 +1,68 @@
+<h2 mat-dialog-title class="titulo">
+  <mat-icon>inventory_2</mat-icon>
+  Inventario actual
+</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="campo-busqueda">
+    <mat-label>Buscar producto</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput type="text" placeholder="Codigo o nombre..." (input)="onBuscarInput($event)" />
+  </mat-form-field>
+
+  <div class="tabla-resumen">
+    <div class="fila fila-encabezado">
+      <button type="button" class="col-orden" (click)="ordenarPor('codigo')">
+        Codigo
+        @if (columnaOrden() === 'codigo') {
+          <mat-icon>{{ direccionOrden() === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        }
+      </button>
+      <button type="button" class="col-orden" (click)="ordenarPor('nombre')">
+        Producto
+        @if (columnaOrden() === 'nombre') {
+          <mat-icon>{{ direccionOrden() === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        }
+      </button>
+      <button type="button" class="col-orden col-stock" (click)="ordenarPor('stock')">
+        Stock
+        @if (columnaOrden() === 'stock') {
+          <mat-icon>{{ direccionOrden() === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        }
+      </button>
+      <button type="button" class="col-orden col-estado" (click)="ordenarPor('estado')">
+        Estado
+        @if (columnaOrden() === 'estado') {
+          <mat-icon>{{ direccionOrden() === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        }
+      </button>
+    </div>
+
+    @for (item of paginaActual(); track item.productoId) {
+      <button type="button" class="fila fila-dato" (click)="seleccionar(item)">
+        <span class="mono">{{ item.codigo }}</span>
+        <span class="nombre">{{ item.nombre }}</span>
+        <span class="col-stock mono">{{ item.stockActual }}</span>
+        <span class="col-estado">
+          <span class="chip-estado" [class.chip-normal]="item.estado === 'NORMAL'" [class.chip-bajo]="item.estado === 'BAJO'" [class.chip-agotado]="item.estado === 'AGOTADO'">
+            {{ item.estado }}
+          </span>
+        </span>
+      </button>
+    } @empty {
+      <p class="sin-resultados">No se encontraron productos</p>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="ordenado().length"
+    [pageSize]="tamanoPagina"
+    [pageIndex]="pagina()"
+    [hidePageSize]="true"
+    (page)="cambiarPagina($event)"
+  ></mat-paginator>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cerrar()">Cerrar</button>
+</mat-dialog-actions>
