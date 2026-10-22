@@ -36,21 +36,34 @@ export class ProductosListado implements OnInit {
   controlBusqueda = new FormControl('');
 
   columnas: ColDef<Producto>[] = [
-    { headerName: 'Codigo', field: 'codigo', filter: 'agTextColumnFilter', minWidth: 130 },
-    { headerName: 'Nombre', field: 'nombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 220 },
+    {
+      headerName: '',
+      field: 'imagenUrl',
+      colId: 'imagen',
+      sortable: false,
+      filter: false,
+      resizable: false,
+      width: 56,
+      cellRenderer: (p: { value: string | null }) =>
+        p.value
+          ? `<div class="celda-miniatura"><img src="${p.value}" alt="" /></div>`
+          : '<div class="celda-miniatura"><span class="material-symbols-outlined">inventory_2</span></div>',
+    },
+    { headerName: 'Codigo', field: 'codigo', filter: 'agTextColumnFilter', width: 120 },
+    { headerName: 'Nombre', field: 'nombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 180 },
     {
       headerName: 'Precio',
       field: 'precio',
       filter: 'agNumberColumnFilter',
-      minWidth: 130,
+      width: 110,
       valueFormatter: (p) => (p.value != null ? Number(p.value).toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''),
     },
-    { headerName: 'Stock minimo', field: 'stockMinimo', filter: 'agNumberColumnFilter', minWidth: 140 },
+    { headerName: 'Stock minimo', field: 'stockMinimo', filter: 'agNumberColumnFilter', width: 120 },
     {
       headerName: 'Estado',
       field: 'activo',
       filter: 'agTextColumnFilter',
-      minWidth: 120,
+      width: 110,
       cellRenderer: (p: { value: boolean }) =>
         p.value
           ? '<span class="chip-estado chip-activo">Activo</span>'
@@ -61,7 +74,8 @@ export class ProductosListado implements OnInit {
       colId: 'acciones',
       sortable: false,
       filter: false,
-      minWidth: 110,
+      resizable: false,
+      width: 100,
       cellRenderer: () => '<button type="button" class="celda-accion-boton" aria-label="Editar producto"><span class="material-symbols-outlined">edit</span></button>',
     },
   ];

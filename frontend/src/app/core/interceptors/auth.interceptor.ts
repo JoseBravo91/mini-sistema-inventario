@@ -1,9 +1,14 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../../environments/environment';
 
-// Adjunta el token JWT a toda peticion saliente hacia la API
+// Adjunta el token JWT solo a peticiones hacia nuestra propia API, nunca a servicios externos (ej. Cloudinary)
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  if (!req.url.startsWith(environment.apiUrl)) {
+    return next(req);
+  }
+
   const authService = inject(AuthService);
   const token = authService.obtenerToken();
 

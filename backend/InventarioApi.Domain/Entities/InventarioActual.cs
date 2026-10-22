@@ -8,6 +8,7 @@ public class InventarioActual
     public string Nombre { get; set; } = string.Empty;
     public decimal Precio { get; set; }
     public int StockMinimo { get; set; }
+    public string? ImagenUrl { get; set; }
     public long StockActual { get; set; }
     public string Estado { get; set; } = string.Empty;
 }

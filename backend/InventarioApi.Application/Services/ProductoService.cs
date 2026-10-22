@@ -54,6 +54,7 @@ public class ProductoService : IProductoService
             Precio = dto.Precio,
             StockMinimo = dto.StockMinimo,
             Activo = true,
+            ImagenUrl = dto.ImagenUrl,
             FechaCreacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
             CreadoPor = usuarioId
         };
@@ -76,6 +77,7 @@ public class ProductoService : IProductoService
         producto.Precio = dto.Precio;
         producto.StockMinimo = dto.StockMinimo;
         producto.Activo = dto.Activo;
+        producto.ImagenUrl = dto.ImagenUrl;
         producto.FechaActualizacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
         producto.ActualizadoPor = usuarioId;
 
@@ -94,6 +96,7 @@ public class ProductoService : IProductoService
         producto.Precio,
         producto.StockMinimo,
         producto.Activo,
+        producto.ImagenUrl,
         producto.FechaCreacion,
         producto.FechaActualizacion,
         producto.UsuarioCreador?.NombreCompleto,

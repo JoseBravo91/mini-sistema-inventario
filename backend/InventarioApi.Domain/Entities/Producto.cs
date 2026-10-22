@@ -10,6 +10,7 @@ public class Producto
     public decimal Precio { get; set; }
     public int StockMinimo { get; set; }
     public bool Activo { get; set; } = true;
+    public string? ImagenUrl { get; set; }
     public DateTime FechaCreacion { get; set; }
     public DateTime? FechaActualizacion { get; set; }
     public int? CreadoPor { get; set; }

@@ -6,8 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 import { ProductoService } from '../../core/services/producto.service';
 import { NotificacionService } from '../../core/services/notificacion.service';
+import { CloudinarioService } from '../../core/services/cloudinario.service';
 import { Producto } from '../../core/models/producto.model';
 
 @Component({
@@ -21,6 +23,7 @@ import { Producto } from '../../core/models/producto.model';
     MatButtonModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
   templateUrl: './producto-formulario.html',
   styleUrl: './producto-formulario.scss',
@@ -29,10 +32,13 @@ export class ProductoFormulario {
   private readonly formBuilder = inject(FormBuilder);
   private readonly productoService = inject(ProductoService);
   private readonly notificacionService = inject(NotificacionService);
+  private readonly cloudinarioService = inject(CloudinarioService);
   private readonly dialogRef = inject(MatDialogRef<ProductoFormulario>);
   productoExistente = inject<Producto | null>(MAT_DIALOG_DATA);
 
   guardando = signal(false);
+  subiendoImagen = signal(false);
+  imagenUrl = signal<string | null>(this.productoExistente?.imagenUrl ?? null);
   esEdicion = !!this.productoExistente;
 
   formulario = this.formBuilder.group({
@@ -43,6 +49,29 @@ export class ProductoFormulario {
     stockMinimo: [this.productoExistente?.stockMinimo ?? 10, [Validators.required, Validators.min(0)]],
     activo: [this.productoExistente?.activo ?? true],
   });
+
+  seleccionarImagen(evento: Event): void {
+    const archivo = (evento.target as HTMLInputElement).files?.[0];
+    if (!archivo) {
+      return;
+    }
+
+    this.subiendoImagen.set(true);
+    this.cloudinarioService.subirImagen(archivo).subscribe({
+      next: (url) => {
+        this.imagenUrl.set(url);
+        this.subiendoImagen.set(false);
+      },
+      error: () => {
+        this.notificacionService.mostrarError('No se pudo subir la imagen, intenta de nuevo');
+        this.subiendoImagen.set(false);
+      },
+    });
+  }
+
+  quitarImagen(): void {
+    this.imagenUrl.set(null);
+  }
 
   guardar(): void {
     if (this.formulario.invalid) {
@@ -60,6 +89,7 @@ export class ProductoFormulario {
           precio: valores.precio!,
           stockMinimo: valores.stockMinimo!,
           activo: valores.activo!,
+          imagenUrl: this.imagenUrl(),
         })
       : this.productoService.crear({
           codigo: valores.codigo!,
@@ -67,6 +97,7 @@ export class ProductoFormulario {
           descripcion: valores.descripcion || null,
           precio: valores.precio!,
           stockMinimo: valores.stockMinimo!,
+          imagenUrl: this.imagenUrl(),
         });
 
     operacion.subscribe({

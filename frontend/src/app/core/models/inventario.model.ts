@@ -5,6 +5,7 @@ export interface InventarioActual {
   nombre: string;
   precio: number;
   stockMinimo: number;
+  imagenUrl: string | null;
   stockActual: number;
   estado: 'NORMAL' | 'BAJO' | 'AGOTADO';
 }

@@ -12,6 +12,10 @@
 </div>
 
 <div class="cuerpo">
+  @if (producto.imagenUrl) {
+    <img class="imagen-producto" [src]="producto.imagenUrl" alt="Imagen de {{ producto.nombre }}" />
+  }
+
   <div class="fila-principal">
     <div class="precio">
       <span class="etiqueta">Precio</span>

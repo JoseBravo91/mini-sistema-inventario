@@ -41,6 +41,7 @@ public class InventarioRepository : IInventarioRepository
                     Nombre = lector.GetString(lector.GetOrdinal("nombre")),
                     Precio = lector.GetDecimal(lector.GetOrdinal("precio")),
                     StockMinimo = lector.GetInt32(lector.GetOrdinal("stock_minimo")),
+                    ImagenUrl = lector.IsDBNull(lector.GetOrdinal("imagen_url")) ? null : lector.GetString(lector.GetOrdinal("imagen_url")),
                     StockActual = lector.GetInt64(lector.GetOrdinal("stock_actual")),
                     Estado = lector.GetString(lector.GetOrdinal("estado"))
                 });

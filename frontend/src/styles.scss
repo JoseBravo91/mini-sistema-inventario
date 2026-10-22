@@ -166,6 +166,28 @@ html, body {
   font-size: 18px;
 }
 
+.celda-miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background-color: var(--color-muted);
+  overflow: hidden;
+}
+
+.celda-miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.celda-miniatura .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--color-muted-foreground);
+}
+
 /* ag-Grid: ajustes para que combine con la tipografia y paleta corporativa */
 .ag-theme-quartz {
   --ag-font-family: "Inter", Roboto, sans-serif;

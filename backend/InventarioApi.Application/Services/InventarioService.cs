@@ -17,7 +17,7 @@ public class InventarioService : IInventarioService
         var inventario = await _inventarioRepository.ObtenerInventarioActualAsync();
 
         return inventario.Select(i => new InventarioActualDto(
-            i.ProductoId, i.Codigo, i.Nombre, i.Precio, i.StockMinimo, i.StockActual, i.Estado
+            i.ProductoId, i.Codigo, i.Nombre, i.Precio, i.StockMinimo, i.ImagenUrl, i.StockActual, i.Estado
         )).ToList();
     }
 }

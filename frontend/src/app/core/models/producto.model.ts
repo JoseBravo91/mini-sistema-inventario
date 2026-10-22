@@ -7,6 +7,7 @@ export interface Producto {
   precio: number;
   stockMinimo: number;
   activo: boolean;
+  imagenUrl: string | null;
   fechaCreacion: string;
   fechaActualizacion: string | null;
   creadoPorNombre: string | null;
@@ -20,6 +21,7 @@ export interface CrearProducto {
   descripcion: string | null;
   precio: number;
   stockMinimo: number;
+  imagenUrl: string | null;
 }
 
 // Datos para actualizar un producto existente
@@ -29,4 +31,5 @@ export interface ActualizarProducto {
   precio: number;
   stockMinimo: number;
   activo: boolean;
+  imagenUrl: string | null;
 }

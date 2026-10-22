@@ -42,6 +42,7 @@ CREATE TABLE productos (
     precio NUMERIC(12, 2) NOT NULL CHECK (precio >= 0),
     stock_minimo INTEGER NOT NULL DEFAULT 10 CHECK (stock_minimo >= 0),
     activo BOOLEAN NOT NULL DEFAULT TRUE,
+    imagen_url VARCHAR(500),
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     fecha_actualizacion TIMESTAMP,
     creado_por INTEGER REFERENCES usuarios(id),
@@ -74,6 +75,7 @@ RETURNS TABLE (
     nombre VARCHAR(150),
     precio NUMERIC(12, 2),
     stock_minimo INTEGER,
+    imagen_url VARCHAR(500),
     stock_actual BIGINT,
     estado VARCHAR(20)
 ) AS $$
@@ -85,6 +87,7 @@ BEGIN
         p.nombre,
         p.precio,
         p.stock_minimo,
+        p.imagen_url,
         COALESCE(SUM(
             CASE
                 WHEN m.tipo = 'ENTRADA' THEN m.cantidad
@@ -112,7 +115,7 @@ BEGIN
     FROM productos p
     LEFT JOIN movimientos m ON m.producto_id = p.id
     WHERE p.activo = TRUE
-    GROUP BY p.id, p.codigo, p.nombre, p.precio, p.stock_minimo
+    GROUP BY p.id, p.codigo, p.nombre, p.precio, p.stock_minimo, p.imagen_url
     ORDER BY p.nombre;
 END;
 $$ LANGUAGE plpgsql;

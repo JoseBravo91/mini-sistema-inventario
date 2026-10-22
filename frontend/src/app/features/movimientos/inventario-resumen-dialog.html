@@ -12,6 +12,7 @@
 
   <div class="tabla-resumen">
     <div class="fila fila-encabezado">
+      <span></span>
       <button type="button" class="col-orden" (click)="ordenarPor('codigo')">
         Codigo
         @if (columnaOrden() === 'codigo') {
@@ -40,6 +41,13 @@
 
     @for (item of paginaActual(); track item.productoId) {
       <button type="button" class="fila fila-dato" (click)="seleccionar(item)">
+        <span class="col-imagen">
+          @if (item.imagenUrl) {
+            <img [src]="item.imagenUrl" alt="" />
+          } @else {
+            <mat-icon>inventory_2</mat-icon>
+          }
+        </span>
         <span class="mono">{{ item.codigo }}</span>
         <span class="nombre">{{ item.nombre }}</span>
         <span class="col-stock mono">{{ item.stockActual }}</span>

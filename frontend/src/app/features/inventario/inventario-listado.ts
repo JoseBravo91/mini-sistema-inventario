@@ -20,22 +20,35 @@ export class InventarioListado implements OnInit {
   cargando = signal(true);
 
   columnas: ColDef<InventarioActual>[] = [
-    { headerName: 'Codigo', field: 'codigo', filter: 'agTextColumnFilter', minWidth: 130 },
-    { headerName: 'Producto', field: 'nombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 220 },
+    {
+      headerName: '',
+      field: 'imagenUrl',
+      colId: 'imagen',
+      sortable: false,
+      filter: false,
+      resizable: false,
+      width: 56,
+      cellRenderer: (p: { value: string | null }) =>
+        p.value
+          ? `<div class="celda-miniatura"><img src="${p.value}" alt="" /></div>`
+          : '<div class="celda-miniatura"><span class="material-symbols-outlined">inventory_2</span></div>',
+    },
+    { headerName: 'Codigo', field: 'codigo', filter: 'agTextColumnFilter', width: 120 },
+    { headerName: 'Producto', field: 'nombre', filter: 'agTextColumnFilter', flex: 1, minWidth: 180 },
     {
       headerName: 'Precio',
       field: 'precio',
       filter: 'agNumberColumnFilter',
-      minWidth: 120,
+      width: 110,
       valueFormatter: (p) => (p.value != null ? Number(p.value).toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''),
     },
-    { headerName: 'Stock minimo', field: 'stockMinimo', filter: 'agNumberColumnFilter', minWidth: 140 },
-    { headerName: 'Stock actual', field: 'stockActual', filter: 'agNumberColumnFilter', minWidth: 140 },
+    { headerName: 'Stock minimo', field: 'stockMinimo', filter: 'agNumberColumnFilter', width: 110 },
+    { headerName: 'Stock actual', field: 'stockActual', filter: 'agNumberColumnFilter', width: 110 },
     {
       headerName: 'Estado',
       field: 'estado',
       filter: 'agTextColumnFilter',
-      minWidth: 130,
+      width: 110,
       cellRenderer: (p: { value: string }) => `<span class="chip-estado ${this.claseEstado(p.value)}">${p.value}</span>`,
     },
   ];

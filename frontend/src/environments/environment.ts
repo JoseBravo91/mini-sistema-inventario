@@ -1,4 +1,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:5080/api',
+  cloudinary: {
+    cloudName: 'dkrnufczh',
+    uploadPreset: 'mini_inventario',
+  },
 };
